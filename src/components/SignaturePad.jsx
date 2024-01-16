@@ -17,7 +17,7 @@ function SignatureArea({handleCanvas}) {
   };
 
   return (
-    <div>
+    <div style={{ height: "calc(100% - 80px)"}}>
       <div className="signature-area">
         <SignaturePad
           ref={signPadRef}

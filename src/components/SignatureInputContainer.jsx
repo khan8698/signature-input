@@ -18,7 +18,7 @@ function SignatureInputArea({ handleCanvas, tabIndex, setTabIndex }) {
           <Tab>Type</Tab>
         </TabList>
 
-        <TabPanel>
+        <TabPanel style={{height: "100%"}}>
           <SignatureArea handleCanvas={handleCanvas} />
         </TabPanel>
         <TabPanel>
