@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 
-const FileSelector = ({ onFileDrop }) => {
+const FileSelector = ({ onFileDrop, handleCanvas }) => {
   const [droppedFile, setDroppedFile] = useState();
 
   const clearFileSelection = () => {
@@ -22,9 +22,16 @@ const FileSelector = ({ onFileDrop }) => {
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: {
-      "image/png": [".png", "jpg", "jpeg"],
+      "image/png": ["png", "jpg", "jpeg"],
     },
   });
+
+  const handleClick = () => {
+    const file = droppedFile.map((item) => {
+      return item.preview
+    })
+    handleCanvas(file)
+  }
 
   return (
     <section className="file-uploader-container">
@@ -51,6 +58,7 @@ const FileSelector = ({ onFileDrop }) => {
           <div style={{ textAlign: "center" }} onClick={clearFileSelection}>
             <button>Clear</button>
           </div>
+          <button onClick={handleClick}>run</button>
         </>
       )}
     </section>

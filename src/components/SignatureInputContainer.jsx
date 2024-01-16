@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 
 import SignatureArea from "./SignaturePad";
@@ -7,26 +7,25 @@ import FileSelector from "./FileSelector";
 
 import "react-tabs/style/react-tabs.css";
 
-function SignatureInputArea() {
-  const [tabIndex, setTabIndex] = useState(0);
+function SignatureInputArea({ handleCanvas, tabIndex, setTabIndex }) {
 
   return (
     <div className="signContainer">
       <Tabs style={{ height: '100%'}} selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
-        <TabList style={{ height: 'max-content'}}>
+        <TabList>
           <Tab>Draw</Tab>
           <Tab>Image</Tab>
           <Tab>Type</Tab>
         </TabList>
 
-        <TabPanel style={{ height: '80%'}}>
-          <SignatureArea />
+        <TabPanel>
+          <SignatureArea handleCanvas={handleCanvas} />
         </TabPanel>
         <TabPanel>
-          <FileSelector />
+          <FileSelector handleCanvas={handleCanvas} />
         </TabPanel>
         <TabPanel>
-          <SignatureTextInput />
+          <SignatureTextInput handleCanvas={handleCanvas} />
         </TabPanel>
       </Tabs>
     </div>

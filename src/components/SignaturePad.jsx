@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import SignaturePad from "react-signature-canvas";
 
-function SignatureArea() {
+function SignatureArea({handleCanvas}) {
   const signPadRef = useRef();
 
   const clear = () => {
@@ -12,18 +12,14 @@ function SignatureArea() {
     // this.setState({
     //   trimmedDataURL: this.sigPad.getTrimmedCanvas().toDataURL("image/png"),
     // });
-    const sourceCanvas = document.getElementById('source');
-    const destinationCanvas = document.getElementById('destination');
-    const destCtx = destinationCanvas.getContext('2d');
-    destCtx.drawImage(sourceCanvas, 0 ,0)
-
+    const dataURL = signPadRef.current.toDataURL();
+    handleCanvas(dataURL)
   };
 
   return (
     <div>
       <div className="signature-area">
         <SignaturePad
-         id='source'
           ref={signPadRef}
           canvasProps={{ className: "signPad", width: 770, height: 187 }}
         />

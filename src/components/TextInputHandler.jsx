@@ -15,11 +15,11 @@ const availableFonts = [
   },
   {
     name: "Font 4",
-    family: "Brush Script MT",
+    family: "Brush Script MT, cursive",
   },
 ];
 
-function SignatureTextInput() {
+function SignatureTextInput({ handleCanvas }) {
   const [signatureText, setSignatureText] = useState("");
   const [signatureFont, setSignatureFont] = useState(availableFonts[0].name);
 
@@ -28,6 +28,11 @@ function SignatureTextInput() {
     // setSignatureText(e.target.value);
     console.log(e.target.value);
   };
+
+  const handleClick = () => {
+    const textProperties = {signatureText, signatureFont}
+    handleCanvas(textProperties)
+  }
 
   return (
     <div className="input-container">
@@ -43,10 +48,11 @@ function SignatureTextInput() {
         }}
         value={signatureText}
         onChange={(e) => {
+          console.log(e.target.value)
           setSignatureText(e.target.value);
         }}
       />
-
+      <button onClick={handleClick}>run</button>
       <div className="font-input-container">
         {availableFonts.map((font) => {
           return (
@@ -62,7 +68,6 @@ function SignatureTextInput() {
                 value={font.family}
                 checked={signatureFont === font.family}
                 onChange={handleRadioButtonSelect}
-                defaultChecked
               />
               {signatureText === "" ? "Signature" : signatureText }
             </label>
