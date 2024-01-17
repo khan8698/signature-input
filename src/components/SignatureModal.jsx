@@ -25,28 +25,27 @@ const customStyles = {
 
 const availableFonts = [
   {
-    name: "Font 1",
     family: "Arial",
   },
   {
-    name: "Font 2",
     family: "Georgia",
   },
   {
-    name: "Font 3",
     family: "Courier New",
   },
   {
-    name: "Font 4",
     family: "Brush Script MT, cursive",
   },
 ];
 
-const SignatureModal = () => {
+const SignatureModal = ({ onChange }) => {
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [tabIndex, setTabIndex] = useState(0);
+
   const [signaturePadRef, setSignaturePadRef] = useState();
+
   const [droppedFile, setDroppedFile] = useState();
+
   const [signatureText, setSignatureText] = useState("");
   const [signatureFont, setSignatureFont] = useState(availableFonts[0].family);
 
@@ -59,48 +58,59 @@ const SignatureModal = () => {
   const clearCanvas = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (ctx) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
   };
 
   const handleSubmit = () => {
     const image = new Image();
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
+    clearCanvas();
 
-    if (tabIndex === 0) {
-      clearCanvas();
-      const dataURL = signaturePadRef.current.toDataURL();
-      var binaryData = [];
-      binaryData.push(dataURL);
-      window.URL.createObjectURL(new Blob(binaryData, { type: "image/png" }));
-      image.onload = function () {
-        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-      };
-      image.src = binaryData[0];
-    } else if (tabIndex === 1) {
-      const file = droppedFile.map((item) => item.preview);
-      clearCanvas();
-      image.onload = function () {
-        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-      };
-      image.src = file;
-    } else {
-      const textProperties = { signatureText, signatureFont };
-      clearCanvas();
-      const text = textProperties.signatureText;
-      const fontFamily = textProperties.signatureFont;
-      ctx.font = `90px ${fontFamily}`;
-      ctx.fillText(text, 0, 80, canvas.width);
+    switch (tabIndex) {
+      case 0: {
+        const dataURL = signaturePadRef.current.toDataURL();
+        var binaryData = [];
+        binaryData.push(dataURL);
+        window.URL.createObjectURL(new Blob(binaryData, { type: "image/png" }));
+        image.onload = function () {
+          ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+        };
+        image.src = binaryData[0];
+        break;
+      }
+      case 1: {
+        const file = droppedFile.map((item) => item.preview);
+        image.onload = function () {
+          ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+        };
+        image.src = file;
+        break;
+      }
+      default: {
+        const textProperties = { signatureText, signatureFont };
+        const text = textProperties.signatureText;
+        const fontFamily = textProperties.signatureFont;
+        ctx.font = `90px ${fontFamily}`;
+        ctx.fillText(text, 0, 80, canvas.width);
+        break;
+      }
     }
-    setSignatureText('')
+
+    setSignatureText("");
     setDroppedFile(undefined);
     setIsOpen(false);
-  };
-
-  const handleClear = () => {
-    // clearCanvas();
-    // signaturePadRef.current.clear();
-    setIsOpen(false);
+    if (onChange) {
+      const dataURL = ctx.toDataURL();
+      var finalImageData = [];
+      finalImageData.push(dataURL);
+      window.URL.createObjectURL(
+        new Blob(finalImageData, { type: "image/png" })
+      );
+      onChange(finalImageData[0]);
+    }
   };
 
   return (
@@ -114,7 +124,7 @@ const SignatureModal = () => {
       ></canvas>
       <Modal
         isOpen={modalIsOpen}
-        onRequestClose={handleClear}
+        onRequestClose={() => setIsOpen(false)}
         style={customStyles}
         contentLabel="Sign Area"
       >
@@ -135,7 +145,7 @@ const SignatureModal = () => {
           setSignatureFont={setSignatureFont}
         />
         <div className="modal-footer">
-          <button onClick={handleClear}>Cancel</button>
+          <button onClick={() => setIsOpen(false)}>Cancel</button>
           <button onClick={handleSubmit}>Submit</button>
         </div>
       </Modal>
