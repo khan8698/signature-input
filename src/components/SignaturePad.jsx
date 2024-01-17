@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef } from "react";
 import SignaturePad from "react-signature-canvas";
 
@@ -7,14 +6,15 @@ function SignatureArea({ setSignaturePadRef }) {
 
   useEffect(() => {
     setSignaturePadRef(signPadRef);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [signPadRef]);
 
   return (
-    <div style={{ height: "calc(100% - 80px)" }}>
+    <div className="signature-pad-container">
       <div className="signature-area">
         <SignaturePad
           ref={signPadRef}
-          canvasProps={{ className: "signPad", width: 770, height: 187 }}
+          canvasProps={{ className: "signPad", width: 770, height: 310 }}
         />
       </div>
     </div>

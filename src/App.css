@@ -30,7 +30,7 @@
   border: 1px solid grey;
 }
 
-/* Modal */
+/*Modal */
 .modal-header {
   display: flex;
   padding: 16px;
@@ -46,14 +46,14 @@
   background-color: #fdfdfd;
 }
 
-/* Files Drag and drop */
+/*Files Drag and drop */
 .dropzone {
   text-align: center;
   line-height: 313px;
 }
 
 .file-uploader-container {
-  height: 210px;
+  height: 310px;
   width: 100%;
 }
 
@@ -101,8 +101,34 @@
   border: 1px solid black;
   width: 100%;
   box-sizing: border-box;
-
+  font-size: 32px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.font-selector-radio {
+  height: 24px;
+  width: 24px;
+}
+
+.signature-pad-container {
+  height: calc(100% - 80px);
+}
+
+.signature-input {
+  height: 50px;
+  font-size: 40px;
+  margin-top: 20px;
+  width: 50%;
+  border: none;
+  border-bottom: 1px solid black;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.h-full {
+  height: 100%;
 }

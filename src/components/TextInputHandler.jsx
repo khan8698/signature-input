@@ -14,15 +14,8 @@ function SignatureTextInput({
   return (
     <div className="input-container">
       <input
-        style={{
-          fontFamily: signatureFont,
-          height: "50px",
-          fontSize: "40px",
-          marginTop: "20px",
-          width: "50%",
-          border: "none",
-          borderBottom: "1px solid black",
-        }}
+        className="signature-input"
+        style={{ fontFamily: signatureFont }}
         placeholder="Signature"
         value={signatureText}
         onChange={(e) => {
@@ -34,11 +27,11 @@ function SignatureTextInput({
           return (
             <label
               className="font-selector"
-              style={{ fontFamily: font.family, fontSize: "32px" }}
+              style={{ fontFamily: font.family }}
               key={font.family}
             >
               <input
-                style={{ height: "24px", width: "24px" }}
+                className="font-selector-radio"
                 type="radio"
                 name={font.family}
                 value={font.family}

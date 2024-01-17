@@ -1,7 +1,7 @@
 import React from "react";
 import { useDropzone } from "react-dropzone";
 
-const FileSelector = ({ onFileDrop, setDroppedFile, droppedFile }) => {
+const FileSelector = ({ setDroppedFile, droppedFile }) => {
   const clearFileSelection = () => {
     setDroppedFile(undefined);
   };
@@ -13,7 +13,6 @@ const FileSelector = ({ onFileDrop, setDroppedFile, droppedFile }) => {
         })
       )
     );
-    onFileDrop(acceptedFiles);
   };
 
   const { getRootProps, getInputProps, fileRejections } = useDropzone({
@@ -52,7 +51,7 @@ const FileSelector = ({ onFileDrop, setDroppedFile, droppedFile }) => {
               />
             </div>
           ))}
-          <div style={{ textAlign: "center" }} onClick={clearFileSelection}>
+          <div className="text-center" onClick={clearFileSelection}>
             <button>Clear</button>
           </div>
         </>
