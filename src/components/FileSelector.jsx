@@ -1,13 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDropzone } from "react-dropzone";
 
-const FileSelector = ({ onFileDrop, handleCanvas }) => {
-  const [droppedFile, setDroppedFile] = useState();
+const FileSelector = ({ onFileDrop, setDroppedFile, droppedFile }) => {
 
   const clearFileSelection = () => {
     setDroppedFile(undefined);
   };
-
   const onDrop = (acceptedFiles) => {
     setDroppedFile(
       acceptedFiles.map((file) =>
@@ -19,19 +17,19 @@ const FileSelector = ({ onFileDrop, handleCanvas }) => {
     onFileDrop(acceptedFiles);
   };
 
-  const { getRootProps, getInputProps } = useDropzone({
+  const { getRootProps, getInputProps, fileRejections } = useDropzone({
     onDrop,
     accept: {
-      "image/png": ["png", "jpg", "jpeg"],
+      'image/*': ["png", "jpg", "jpeg"],
     },
+    maxFiles:1
   });
 
-  const handleClick = () => {
-    const file = droppedFile.map((item) => {
-      return item.preview
-    })
-    handleCanvas(file)
-  }
+  fileRejections.map(() => { 
+    return (
+    setDroppedFile(false)
+    ) 
+   });
 
   return (
     <section className="file-uploader-container">
@@ -47,7 +45,7 @@ const FileSelector = ({ onFileDrop, handleCanvas }) => {
       ) : (
         <>
           {droppedFile.map((file) => (
-            <div className="image-container">
+            <div key={file.preview} className="image-container">
               <img
                 src={file.preview}
                 alt="Selected Files"
@@ -58,7 +56,6 @@ const FileSelector = ({ onFileDrop, handleCanvas }) => {
           <div style={{ textAlign: "center" }} onClick={clearFileSelection}>
             <button>Clear</button>
           </div>
-          <button onClick={handleClick}>run</button>
         </>
       )}
     </section>

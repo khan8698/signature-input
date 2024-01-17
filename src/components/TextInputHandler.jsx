@@ -1,38 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 
-const availableFonts = [
-  {
-    name: "Font 1",
-    family: "Arial",
-  },
-  {
-    name: "Font 2",
-    family: "Georgia",
-  },
-  {
-    name: "Font 3",
-    family: "Courier New",
-  },
-  {
-    name: "Font 4",
-    family: "Brush Script MT, cursive",
-  },
-];
-
-function SignatureTextInput({ handleCanvas }) {
-  const [signatureText, setSignatureText] = useState("");
-  const [signatureFont, setSignatureFont] = useState(availableFonts[0].name);
-
+function SignatureTextInput({
+  signatureText,
+  setSignatureText,
+  signatureFont,
+  setSignatureFont,
+  availableFonts,
+}) {
   const handleRadioButtonSelect = (e) => {
     setSignatureFont(e.target.value);
-    // setSignatureText(e.target.value);
-    console.log(e.target.value);
   };
-
-  const handleClick = () => {
-    const textProperties = {signatureText, signatureFont}
-    handleCanvas(textProperties)
-  }
 
   return (
     <div className="input-container">
@@ -46,13 +23,12 @@ function SignatureTextInput({ handleCanvas }) {
           border: "none",
           borderBottom: "1px solid black",
         }}
+        placeholder="Signature"
         value={signatureText}
         onChange={(e) => {
-          console.log(e.target.value)
           setSignatureText(e.target.value);
         }}
       />
-      <button onClick={handleClick}>run</button>
       <div className="font-input-container">
         {availableFonts.map((font) => {
           return (
@@ -69,7 +45,7 @@ function SignatureTextInput({ handleCanvas }) {
                 checked={signatureFont === font.family}
                 onChange={handleRadioButtonSelect}
               />
-              {signatureText === "" ? "Signature" : signatureText }
+              {signatureText === "" ? "Signature" : signatureText}
             </label>
           );
         })}
