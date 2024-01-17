@@ -2,7 +2,6 @@ import React from "react";
 import { useDropzone } from "react-dropzone";
 
 const FileSelector = ({ onFileDrop, setDroppedFile, droppedFile }) => {
-
   const clearFileSelection = () => {
     setDroppedFile(undefined);
   };
@@ -20,16 +19,16 @@ const FileSelector = ({ onFileDrop, setDroppedFile, droppedFile }) => {
   const { getRootProps, getInputProps, fileRejections } = useDropzone({
     onDrop,
     accept: {
-      'image/*': ["png", "jpg", "jpeg"],
+      "image/jpeg": [],
+      "image/png": [],
+      "image/jpg": [],
     },
-    maxFiles:1
+    maxFiles: 1,
   });
 
-  fileRejections.map(() => { 
-    return (
-    setDroppedFile(false)
-    ) 
-   });
+  fileRejections.map(() => {
+    return setDroppedFile(false);
+  });
 
   return (
     <section className="file-uploader-container">

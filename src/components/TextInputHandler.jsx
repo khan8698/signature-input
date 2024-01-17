@@ -35,12 +35,12 @@ function SignatureTextInput({
             <label
               className="font-selector"
               style={{ fontFamily: font.family, fontSize: "32px" }}
-              key={font.name}
+              key={font.family}
             >
               <input
                 style={{ height: "24px", width: "24px" }}
                 type="radio"
-                name={font.name}
+                name={font.family}
                 value={font.family}
                 checked={signatureFont === font.family}
                 onChange={handleRadioButtonSelect}

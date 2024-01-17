@@ -64,10 +64,11 @@ const SignatureModal = ({ onChange }) => {
   };
 
   const handleSubmit = () => {
+    clearCanvas();
+
     const image = new Image();
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    clearCanvas();
 
     switch (tabIndex) {
       case 0: {
@@ -102,14 +103,9 @@ const SignatureModal = ({ onChange }) => {
     setSignatureText("");
     setDroppedFile(undefined);
     setIsOpen(false);
+
     if (onChange) {
-      const dataURL = ctx.toDataURL();
-      var finalImageData = [];
-      finalImageData.push(dataURL);
-      window.URL.createObjectURL(
-        new Blob(finalImageData, { type: "image/png" })
-      );
-      onChange(finalImageData[0]);
+      onChange(ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height));
     }
   };
 
